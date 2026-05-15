@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/layout_activity_main.xml.flat",
+        "source": "xyz.luliming.app-main-35:/layout/activity_main.xml"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "xyz.luliming.app-main-35:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/xml_network_security_config.xml.flat",
+        "source": "xyz.luliming.app-main-35:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/layout_activity_splash.xml.flat",
+        "source": "xyz.luliming.app-main-35:/layout/activity_splash.xml"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "xyz.luliming.app-main-35:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/mipmap-xxxhdpi_ic_launcher.jpg.flat",
+        "source": "xyz.luliming.app-main-35:/mipmap-xxxhdpi/ic_launcher.jpg"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/mipmap-xxxhdpi_app_icon_res.jpg.flat",
+        "source": "xyz.luliming.app-main-35:/mipmap-xxxhdpi/app_icon_res.jpg"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "xyz.luliming.app-main-35:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/mipmap-xxxhdpi_ic_launcher_round.jpg.flat",
+        "source": "xyz.luliming.app-main-35:/mipmap-xxxhdpi/ic_launcher_round.jpg"
+    },
+    {
+        "merged": "xyz.luliming.app-merged_res-33:/drawable_grid_pattern.xml.flat",
+        "source": "xyz.luliming.app-main-35:/drawable/grid_pattern.xml"
+    }
+]
