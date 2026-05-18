@@ -25,7 +25,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import xyz.luliming.app.databinding.ActivityMainBinding;
 import xyz.luliming.app.databinding.ActivitySplashBinding;
@@ -63,10 +71,62 @@ public class MainActivity extends AppCompatActivity {
 
         if (isNetworkAvailable()) {
             binding.webView.loadUrl(url);
+            checkUpdate(); // 异步检查版本更新
         } else {
             showError(getString(R.string.no_network));
             hideSplashOverlay();
         }
+    }
+
+    private void checkUpdate() {
+        new Thread(() -> {
+            try {
+                // 这里替换为您真实的检查更新接口
+                // 预期返回 JSON: {"versionCode": 2, "versionName": "1.0.1", "downloadUrl": "...", "updateLog": "优化体验"}
+                URL updateUrl = new URL("https://www.luliming.xyz/app-update.json");
+                HttpURLConnection connection = (HttpURLConnection) updateUrl.openConnection();
+                connection.setConnectTimeout(5000);
+                connection.setRequestMethod("GET");
+
+                if (connection.getResponseCode() == 200) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder response = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        response.append(line);
+                    }
+                    reader.close();
+
+                    JSONObject json = new JSONObject(response.toString());
+                    int serverVersionCode = json.getInt("versionCode");
+                    String versionName = json.getString("versionName");
+                    String downloadUrl = json.getString("downloadUrl");
+                    String updateLog = json.optString("updateLog", "新版本发布");
+
+                    // 获取当前版本号
+                    int currentVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+
+                    if (serverVersionCode > currentVersionCode) {
+                        runOnUiThread(() -> showUpdateDialog(versionName, updateLog, downloadUrl));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void showUpdateDialog(String versionName, String updateLog, String downloadUrl) {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.update_title) + " v" + versionName)
+                .setMessage(getString(R.string.update_msg, updateLog))
+                .setPositiveButton(R.string.update_btn_now, (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
+                    startActivity(intent);
+                })
+                .setNegativeButton(R.string.update_btn_later, null)
+                .setCancelable(false)
+                .show();
     }
 
     private void playSplashAnimation() {
@@ -110,16 +170,24 @@ public class MainActivity extends AppCompatActivity {
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+        
+        // 进一步增强：允许混合内容加载，解决部分资源加载失败问题
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         settings.setSupportZoom(true);
         settings.setBuiltInZoomControls(true);
         settings.setDisplayZoomControls(false);
-        settings.setAllowFileAccess(false);
-        settings.setAllowContentAccess(false);
+        settings.setAllowFileAccess(true); // 允许访问文件，部分 H5 插件需要
+        settings.setAllowContentAccess(true);
+        
+        // 进一步增强：使用更通用的现代 Chrome User-Agent
+        String customUA = "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36";
+        settings.setUserAgentString(customUA);
 
         CookieManager.getInstance().setAcceptCookie(true);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(binding.webView, true);
 
         binding.webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -160,12 +228,21 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onReceivedSslError(WebView view, android.webkit.SslErrorHandler handler, android.net.http.SslError error) {
+                // 忽略证书错误（主要针对部分旧设备或特定网络环境）
+                handler.proceed();
+            }
+
+            @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
                 if (request.isForMainFrame()) {
                     isErrorOccurred = true;
-                    showError(getString(R.string.load_error));
-                    hideSplashOverlay(); // 出错也要隐藏闪屏，否则看不见错误提示
+                    String debugInfo = "\nURL: " + request.getUrl() + 
+                                     "\nError: " + error.getErrorCode() + 
+                                     "\nDesc: " + error.getDescription();
+                    showError(getString(R.string.load_error) + debugInfo);
+                    hideSplashOverlay();
                 }
             }
         });

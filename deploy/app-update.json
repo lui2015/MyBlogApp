@@ -1,0 +1,6 @@
+{
+  "versionCode": 2,
+  "versionName": "1.0.1",
+  "downloadUrl": "https://www.luliming.xyz/app/app-release.apk",
+  "updateLog": "1. 修复了特定链接无法打开的问题 (User-Agent 优化)\n2. 重构为 Java 语言，提升稳定性\n3. 优化了赛博朋克风格启动动画"
+}
