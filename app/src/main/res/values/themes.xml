@@ -17,4 +17,13 @@
         <item name="android:windowBackground">@color/splash_bg</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
+
+    <!-- Cyberpunk Dialog Theme -->
+    <style name="Theme.LuLiMing.Dialog" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@color/splash_bg</item>
+        <item name="colorAccent">@color/cyber_cyan</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/cyber_cyan</item>
+    </style>
 </resources>

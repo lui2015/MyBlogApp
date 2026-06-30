@@ -77,6 +77,113 @@
 
     </LinearLayout>
 
+    <!-- 悬浮菜单组：固定大小确保展开区域可点击 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fabMenuContainer"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 子按钮：回到主页 (洋红) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:contentDescription="@string/menu_home"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_home"
+            android:visibility="gone"
+            app:backgroundTint="@color/cyber_magenta"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/btnAddShortcut"
+            app:layout_constraintEnd_toEndOf="@id/btnAddShortcut"
+            app:layout_constraintStart_toStartOf="@id/btnAddShortcut"
+            app:layout_constraintTop_toTopOf="@id/btnAddShortcut"
+            app:rippleColor="@color/white"
+            app:tint="@color/white" />
+
+        <!-- 子按钮：历史记录 (亮黄) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:contentDescription="@string/menu_history"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_history"
+            android:visibility="gone"
+            app:backgroundTint="@color/cyber_yellow"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/btnAddShortcut"
+            app:layout_constraintEnd_toEndOf="@id/btnAddShortcut"
+            app:layout_constraintStart_toStartOf="@id/btnAddShortcut"
+            app:layout_constraintTop_toTopOf="@id/btnAddShortcut"
+            app:rippleColor="@color/white"
+            app:tint="@color/splash_bg" />
+
+        <!-- 子按钮：访问网址 (蓝色) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabGoTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:contentDescription="@string/menu_go_to"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_link"
+            android:visibility="gone"
+            app:backgroundTint="@color/primary"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/btnAddShortcut"
+            app:layout_constraintEnd_toEndOf="@id/btnAddShortcut"
+            app:layout_constraintStart_toStartOf="@id/btnAddShortcut"
+            app:layout_constraintTop_toTopOf="@id/btnAddShortcut"
+            app:rippleColor="@color/white"
+            app:tint="@color/white" />
+
+        <!-- 子按钮：添加到桌面 (白色) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabShortcut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:contentDescription="@string/menu_shortcut"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:src="@drawable/ic_add_to_home"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@id/btnAddShortcut"
+            app:layout_constraintEnd_toEndOf="@id/btnAddShortcut"
+            app:layout_constraintStart_toStartOf="@id/btnAddShortcut"
+            app:layout_constraintTop_toTopOf="@id/btnAddShortcut"
+            app:rippleColor="@color/cyber_cyan"
+            app:tint="@color/splash_bg" />
+
+        <!-- 主按钮 (青色) -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnAddShortcut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/add_to_home"
+            android:src="@drawable/ic_add_to_home"
+            app:backgroundTint="@color/cyber_cyan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@color/cyber_magenta"
+            app:tint="@color/splash_bg" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <!-- 赛博朋克闪屏叠加层 -->
     <include
         android:id="@+id/splashOverlay"
